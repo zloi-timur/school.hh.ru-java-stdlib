@@ -11,12 +11,15 @@ public class Substitutor3000 {
     }
 
     private String process(String val){
-        Pattern p = Pattern.compile("\\$\\{(.+)\\}");
+        Pattern p = Pattern.compile("\\$\\{(.+?)\\}");
         Matcher m = p.matcher(val);
         while(m.find()){
-            m = p.matcher(m.replaceFirst(map.get(m.group(1))));
+            String lex = "";
+            if (map.containsKey(m.group(1)))
+                lex = map.get(m.group(1));
+            m = p.matcher(m.replaceFirst(lex));
         }
-        return m.toString();
+        return m.replaceFirst("");
     }
 
     public void put(String key, String value) {

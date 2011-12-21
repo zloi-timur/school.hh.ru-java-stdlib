@@ -17,6 +17,7 @@ public class Server {
     public Server(InetSocketAddress addr) {
         try {
             server = new ServerSocket(addr.getPort(),0,addr.getAddress());
+            System.out.println("Server created");
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
