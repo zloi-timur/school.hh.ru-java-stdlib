@@ -47,7 +47,7 @@ public class Server {
                     try {
                         inp = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                         outp = clientSocket.getOutputStream();
-                        command = inp.readLine().split(" ");
+                        command = inp.readLine().split(" ",3);
                     } catch (IOException e) {
                         e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                     }
@@ -65,7 +65,8 @@ public class Server {
                             }
                         }
                         if (command[0].equals("GET")){
-                            result = "VALUE\n"+substitutor.get(command[1])+"\n";
+                            if (command.length == 2)
+                                result = "VALUE\n"+substitutor.get(command[1])+"\n";
                         }
                         if (command[0].equals("SET")){
                             if (command[1].equals("SLEEP") && command.length == 3){
