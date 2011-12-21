@@ -27,6 +27,8 @@ public class Substitutor3000 {
     }
 
     public String get(String key) {
-        return process(map.get(key));
+        if (map.containsKey(key))
+            return process(map.get(key));
+        return "";
     }
 }

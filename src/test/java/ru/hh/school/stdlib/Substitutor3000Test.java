@@ -21,4 +21,9 @@ public class Substitutor3000Test {
     
     Assert.assertEquals("bla--bla", sbst.get("k"));
   }
+    @Test
+    public void emptyGet() {
+        Substitutor3000 sbst = new Substitutor3000();
+        Assert.assertEquals("", sbst.get("k"));
+    }
 }
