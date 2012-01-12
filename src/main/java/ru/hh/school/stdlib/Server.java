@@ -8,12 +8,14 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.Executor;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import static java.util.concurrent.Executors.newCachedThreadPool;
 
 public class Server {
     private ServerSocket server;
     private final Substitutor3000 substitutor;
-    private Integer sleepTime;
+    private AtomicInteger sleepTime;
     public Server(InetSocketAddress addr) {
         try {
             server = new ServerSocket(addr.getPort(),0,addr.getAddress());
@@ -22,7 +24,7 @@ public class Server {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
         substitutor = new Substitutor3000();
-        this.sleepTime = 0;
+        this.sleepTime.set(0);
     }
 
     public Server(InetSocketAddress addr, Integer sleepTime) {
@@ -32,7 +34,7 @@ public class Server {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
         substitutor = new Substitutor3000();
-        this.sleepTime = sleepTime;
+        this.sleepTime.set(sleepTime);
     }
 
     public void run() throws IOException {
@@ -53,7 +55,7 @@ public class Server {
                         e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                     }
                     try {
-                        Thread.sleep(sleepTime);
+                        Thread.sleep(sleepTime.get());
                     } catch (InterruptedException e) {
                         e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                     }
@@ -71,7 +73,7 @@ public class Server {
                         }
                         if (command[0].equals("SET")){
                             if (command[1].equals("SLEEP") && command.length == 3){
-                                sleepTime = new Integer(command[2]);
+                                sleepTime.set(new Integer(command[2]));
                                 System.out.println("Sleep Time setted to"+command[2]);
                                 result = "Ok\n";
                             }
